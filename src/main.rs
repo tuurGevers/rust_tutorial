@@ -6,49 +6,122 @@ use std::io::{Write, BufReader, BufRead, ErrorKind};
 use std::fs::File;
 use std::cmp::Ordering;
 
-fn main() {
+fn main() {}
+
+fn enums() {
+    enum DAYS {
+        Monday,
+        Thuesday,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday,
+        Sunday,
+
+    }
+
+    impl DAYS {
+        fn is_weekend(&self) -> bool {
+            match self {
+                DAYS::Saturday | DAYS::Sunday => true,
+                _ => false
+            }
+        }
+    }
+
+    let today: DAYS = DAYS::Monday;
 
 
+    match today {
+        DAYS::Monday => println!("everyone hates monday"),
+        _ => println!("nie maandag")
+    }
 
-
-
+    println!("it is weekend: {}", today.is_weekend())
 }
 
-fn for_each(){
-    let arr_1 = [1,2,3,4, 5, 6,7,8,9];
+fn casting_as() {
+    let int_u8: u8 = 5;
+    let int2_u8: u8 = 4;
+    let int3_u32: u32 = (int_u8 as u32) + (int2_u8 as u32);
+}
 
-    for val in arr_1.iter(){
+fn basic_strings() {
+    let mut st1 = String::new(); //new empty string
+    st1.push('a'); //add character
+    st1.push_str(" word"); //add str
+    for word in st1.split_whitespace() {
+        println!("{}", word)
+    }
+
+    let st2 = st1.replace("a", "Another");
+    println!("{}", st2);
+
+    let st3 = String::from("a z z z f g h");//create string with value
+
+    let mut v1: Vec<char> = st3.chars().collect();
+    v1.sort();
+    v1.dedup();
+    for char in v1 {
+        println!("{}", char)
+    }
+
+    let st4: &str = "random string";
+    let mut st5: String = st4.to_string();
+    println!("{}", st5);
+
+    let byte_arr1 = st5.as_bytes();
+    let st6 = &st5[0..6];
+    println!("string length: {}", st6.len());
+    st5.clear();
+    println!("{}", st5);
+    let st6 = String::from("Just some");
+    let st7 = String::from("words");
+    let st8 = st6 + &st7; //st6 bestaat nu niet meer omdat hij deel uit maakt van st8 st7 wel omdat we een refferentie naar st7 in st8 steken
+
+    for char in st8.bytes() {
+        println!("{}", char);
+    }
+}
+
+fn tuples() {
+    let my_tuple: (u8, String, f64) = (47, "tuur".to_string(), 50000.00);
+    println!("name: {}", my_tuple.1)
+}
+
+fn for_each() {
+    let arr_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+    for val in arr_1.iter() {
         println!("val : {}", val)
     }
 }
 
-fn while_loop(){
-    let arr_1 = [1,2,3,4, 5, 6,7,8,9];
+fn while_loop() {
+    let arr_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     let mut loop_index = 0;
 
-    while loop_index < arr_1.len(){
+    while loop_index < arr_1.len() {
         println!("ARR : {}", arr_1[loop_index]);
-        loop_index+=1;
+        loop_index += 1;
     }
 }
 
-fn odd_loop(){
-    let arr_1 = [1,2,3,4, 5, 6,7,8,9];
-    println!("first: {}",arr_1[0]);
-    println!("legnth of array: {}",arr_1.len());
+fn odd_loop() {
+    let arr_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    println!("first: {}", arr_1[0]);
+    println!("legnth of array: {}", arr_1.len());
     let mut loop_index = 0;
     loop {
         if arr_1[loop_index] % 2 == 0 {
-            loop_index+=1;
+            loop_index += 1;
             continue;
         }
-        if arr_1[loop_index] == 9{
+        if arr_1[loop_index] == 9 {
             break;
         }
         println!("val : {}", arr_1[loop_index]);
-        loop_index+=1;
-
-
+        loop_index += 1;
     }
 }
 
