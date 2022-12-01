@@ -1,12 +1,144 @@
 #![allow(unused)]
 
+mod restaurant;
+
 use std::io;
 use rand::Rng;
 use std::io::{Write, BufReader, BufRead, ErrorKind};
 use std::fs::File;
 use std::cmp::Ordering;
+use std::ops::Add;
+use std::collections::HashMap;
+use crate::restaurant::order_food;
 
-fn main() {}
+fn main() {
+    order_food()
+
+}
+
+fn structs_and_traits(){
+    const PI: f32 = 3.141592;
+    struct Customer {
+        name: String,
+        address: String,
+        balance: f32,
+    }
+
+    let mut bob = Customer {
+        name: String::from("Bob Smith"),
+        address: String::from("555 Main St"),
+        balance: 234.50,
+    };
+
+    bob.address = String::from("505 Main St");
+
+
+    struct Rectangle<T, U> {
+        length: T,
+        height: U,
+    }
+
+    let rec = Rectangle {
+        length: 5,
+        height: 5.5,
+    };
+    trait Shape {
+        fn new(length: f32, width: f32) -> Self;
+        fn area(&self) -> f32;
+    }
+    struct Rectangle2 {
+        length: f32,
+        width: f32,
+    }
+
+    struct Circle {
+        length: f32,
+        width: f32,
+    }
+
+    impl Shape for Rectangle2{
+        fn new(length: f32, width: f32) -> Rectangle2 {
+            return Rectangle2{length,width};
+        }
+        fn area(&self) -> f32 {
+            return self.width * self.length;
+        }
+    }
+
+    impl Shape for Circle{
+        fn new(length: f32, width: f32) -> Circle {
+            return Circle{length,width};
+        }
+        fn area(&self) -> f32 {
+            return (self.width / 2.0).powf(2.0) * PI;
+        }
+    }
+
+    let rec: Rectangle2 = Shape::new(10.0, 10.0);
+    let circle: Circle = Shape::new(10.0, 10.0);
+    println!("area of rectangle:  {}, area of circle: {}", rec.area(), circle.area())
+}
+
+fn hashmpas() {
+    let mut heroes = HashMap::new();
+    heroes.insert("Superman", "Clark Kent");
+    heroes.insert("Batman", "Bruce Wayne");
+    heroes.insert("The Flash", "Barry Allen");
+
+    for (k, v) in heroes.iter() {
+        println!("{} = {}", k, v)
+    }
+
+    if heroes.contains_key("Batman") {
+        let the_batman = heroes.get("Batman");
+        match the_batman {
+            Some(x) => println!("that man is a hero"),
+            None => println!("Batman is not a hero")
+        };
+    }
+}
+
+fn ownership() {
+    let mut str1 = String::from("tuur");
+    //let str2 = str1; //str1 now becomes str2 so the println will fail
+    let str2 = str1.clone();//now there are two copies of str1 one that's consumed by str2 and one that remains str1
+    println!("Hello {}", str1);
+    change_string(&mut str1);
+    println!("{}", str1)
+}
+
+fn change_string(x: &mut String) {
+    x.push_str(" is happy");
+}
+
+//    println!("4 + 5 = {}", get_sum_gen(1.2, 2.2));
+fn get_sum_gen<T: Add<Output=T>>(x: T, y: T) -> T {
+    return x + y;
+}
+
+//let (val_1, val2) = get_2(2);
+fn get_2(x: i32) -> (i32, i32) {
+    return (x + 1, x + 2);
+}
+
+fn vectors() {
+    let vec1: Vec<i32> = Vec::new();
+    let mut vec2 = vec![1, 2, 3, 4];
+    vec2.push(5);
+    println!("{}", vec2[0]);
+    let second: &i32 = &vec2[1];
+    match vec2.get(1) {
+        Some(second) => println!("2nd: {}", second),
+        none => println!("no second value")
+    }
+
+    for i in &mut vec2 {
+        *i *= 2;
+    }
+    for i in &vec2 {
+        println!("{}", i);
+    }
+}
 
 fn enums() {
     enum DAYS {
